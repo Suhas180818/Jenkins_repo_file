@@ -2,16 +2,13 @@ pipeline {
     agent any 
 
     stages {
-        stage ('TEST') {
+        stage('TEST') {
             steps {
                 echo "This is testing the script"
                 sh 'sleep 5'    
             }
         }
-
-    }
-    stages {
-        stage ('BUILD') {
+        stage('BUILD') {
             steps {
                 echo "This is building the script"
                 sh '''
