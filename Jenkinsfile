@@ -15,7 +15,7 @@ pipeline {
                     #!/bin/bash
                     pwd
                     ls -lrt 
-                    sleep 
+                    sleep 10
                 '''                    
             }
         }
