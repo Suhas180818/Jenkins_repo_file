@@ -1,6 +1,6 @@
 pipeline {
     
-    agent {{label 'ubuntulinux01' && 'ubuntulinux02'}}
+    agent {label 'ubuntulinux01' && 'ubuntulinux02'}
     
     stages {
         stage ('TEST') {
