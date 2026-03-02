@@ -1,24 +1,25 @@
 pipeline {
-    agent any 
 
-    stages {
-        stage('TEST') {
+    agent any
+
+    stages{
+        stage('Build') {
             steps {
-                echo "This is testing the script"
-                sh 'sleep 5'    
+                echo "This is the bulid"
+                sh '''
+                    echo "This the shell executed Command in Stage 1"              
+                '''
             }
         }
-        stage('BUILD') {
+        stage('Test') {
             steps {
-                echo "This is building the script"
                 sh '''
                     #!/bin/bash
-                    pwd
-                    ls -lrt 
-                    sleep 10
-                '''                    
+                    ls -lrt
+                    echo "Shell Command Executing in Stage2"
+                ''' 
+
             }
         }
-        
-    }
+    }   
 }
