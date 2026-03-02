@@ -22,5 +22,16 @@ pipeline {
 
             }
         }
+        stage('Deploy') {
+            steps {
+                sh '''
+                    #!/bin/bash
+                    ls -lrt
+                    echo "Shell Command Deploying the config file"
+                    sleep 5
+                ''' 
+
+            }
+        }
     }   
 }
