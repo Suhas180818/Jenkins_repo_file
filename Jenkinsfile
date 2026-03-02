@@ -17,6 +17,7 @@ pipeline {
                     #!/bin/bash
                     ls -lrt
                     echo "Shell Command Executing in Stage2"
+                    sleep 10 
                 ''' 
 
             }
