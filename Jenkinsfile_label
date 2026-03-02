@@ -1,5 +1,5 @@
 pipeline {
-    agent (label 'Ubuntu-linux01') 
+    agent {label 'Ubuntulinux01'}
 
     stages {
         stage ('TEST') {
@@ -15,6 +15,6 @@ pipeline {
                 echo 'This is building the script'                    
             }
         }
-        
+
     }
 }
