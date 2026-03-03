@@ -2,7 +2,7 @@ pipeline {
     
     parameters{
         string(name:'NAME' , defaultValue:'' ,  description:'')
-        booleanParam(name:'SKIP_TEST', defalutvalue:'false', description:'Checking to skip the test')
+        booleanParam(name:'SKIP_TEST', defaultValue:'false', description:'Checking to skip the test')
         choice(name:'BRANCH', choices:['main','feature','suhas'], description:'where the branch to deploy')
 
     }
