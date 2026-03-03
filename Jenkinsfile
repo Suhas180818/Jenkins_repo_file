@@ -1,17 +1,25 @@
 pipeline {
     
-    agent { label 'ubuntulinux01' }
+    parameters{
+        string(name:'NAME' , defaultValue:'' ,  description:'')
+        booleanParam(name:'SKIP_TEST', defalutvalue:'false', description:'Checking to skip the test')
+        choice(name:'BRANCH', choices:['main','feature','suhas'], description:'where the branch to deploy')
+
+    }
+
+    agent any 
+
     
     stages {
-        stage {
+        stage ('BUILD') {
            steps{
-                echo "This is the bulid"
-                sh '''
-                    echo "This the shell executed Command in Stage 1"              
-                '''
-           }  
+                echo "NAME: ${params.NAME}"
+                echo "SKIP_TEST: ${params.SKIP_TEST}"
+                echo "BRANCH: ${params.BRANCH}"
+                
+            }  
         }
-        stage {  
+        stage ('TEST') {  
             steps {
                 sh '''
                     #!/bin/bash
