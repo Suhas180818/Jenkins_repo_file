@@ -1,9 +1,9 @@
 pipeline {
     
-    agent { label 'ubuntulinux01 && ubuntulinux02'}
+    agent { label 'ubuntulinux01' }
     
     stages {
-        stage ('TEST') {
+        stage {
            steps{
                 echo "This is the bulid"
                 sh '''
@@ -11,7 +11,7 @@ pipeline {
                 '''
            }  
         }
-        stage ('DEPLOY') {
+        stage {  
             steps {
                 sh '''
                     #!/bin/bash
