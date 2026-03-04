@@ -25,7 +25,7 @@ pipeline {
                         exit 1
                     }
                     catch (err){
-                        echo "Error catched : ${err}"
+                        echo "Error catched : ${err.getMessage()}"
                         currentStage.result = "SUCCESS"
                     }
 
