@@ -11,7 +11,7 @@ pipeline {
     stages {
         stage ('BUILD_1a') {
            steps{
-                catchError(buildResult:'FAILURE', stageResult:'FAILURE'){
+                catchError (buildResult:'FAILURE', stageResult:'FAILURE') {
                     echo "SKIP_TEST: ${params.SKIP_TEST}"
                     exit 1              
                 }
@@ -25,7 +25,7 @@ pipeline {
                         exit 1
                     }
                     catch (err){
-                        echo "Error catched : $(err)"
+                        echo "Error catched : ${err}"
                         currentStage.result = "SUCCESS"
                     }
 
