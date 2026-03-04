@@ -17,24 +17,23 @@ pipeline {
                 }
             } 
         } 
-        // stage ('BUILD_1b') {
-        //     steps{
-        //         script {
-        //             try {
-        //                 sh '''
-        //                     sleep 5
-        //                     exit 1
-        //                 '''
-        //             }
+        stage ('BUILD_1b') {
+            steps{
+                script {
+                    try {
+                        sh '''
+                            sleep 5
+                            exit 1
+                        '''
+                    }
 
-        //             catch (err) {
-        //                 echo "Error catched : ${err}"
-        //                 currentBuild.result = "SUCCESS"
-        //                 currentStage.result = "SUCCESS"                    
-        //             }
-        //         }
-        //     }
-        // }
+                    catch (err) {
+                        echo "Error catched : ${err}"
+                        currentBuild.result = "SUCCESS"                    
+                    }
+                }
+            }
+        }
         stage('TEST'){
             parallel {
                 stage ('WINDOWS_TESTING'){
