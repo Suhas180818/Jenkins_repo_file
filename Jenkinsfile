@@ -11,15 +11,16 @@ pipeline {
     stages {
 
         stage ('CHECKOUT') {
-            checkout ([ $class : 'GitSCM'
-                        branches: [[name: '*/suhas']], 
-                        extensions: [], 
-                        userRemoteConfigs: [[
-                            credentialsId: 'Git_repo_acess', 
-                            url: 'https://github.com/Suhas180818/Jenkins_repo_file.git'
-                        ]]
-                    ])    
-
+            steps {
+                checkout ([ $class : 'GitSCM'
+                            branches: [[name: '*/suhas']], 
+                            extensions: [], 
+                            userRemoteConfigs: [[
+                                credentialsId: 'Git_repo_acess', 
+                                url: 'https://github.com/Suhas180818/Jenkins_repo_file.git'
+                            ]]
+                ])    
+            }
         }
         
         stage ('TRY_CATCH') {
