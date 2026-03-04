@@ -11,7 +11,8 @@ pipeline {
     stages {
         stage ('BUILD') {
            steps{
-                echo "SKIP_TEST: ${params.SKIP_TEST}"              
+                echo "SKIP_TEST: ${params.SKIP_TEST}"
+                exit 1              
             } 
         } 
         stage('TEST'){
