@@ -1,6 +1,6 @@
 pipeline {
     agent any 
-    
+    checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/Suhas180818/Jenkins_repo_file.git']])
     parameters{
         string(name:'NAME' , defaultValue:'' ,  description:'')
         booleanParam(name:'SKIP_TEST', defaultValue:'false', description:'Checking to skip the test')
@@ -9,17 +9,9 @@ pipeline {
     }  
   
     stages {
-
         stage ('CHECKOUT') {
             steps {
-                checkout ([ $class : 'GitSCM'
-                            branches: [[name: '*/suhas']], 
-                            extensions: [], 
-                            userRemoteConfigs: [[
-                                credentialsId: 'Git_repo_acess', 
-                                url: 'https://github.com/Suhas180818/Jenkins_repo_file.git'
-                            ]]
-                ])    
+                checkout scmGit(branches: [[name: '*/suhas']], extensions: [], userRemoteConfigs: [[credentialsId: 'Git_repo_acess', url: 'https://github.com/Suhas180818/Jenkins_repo_file.git']])
             }
         }
         
