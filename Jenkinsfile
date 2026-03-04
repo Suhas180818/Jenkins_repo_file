@@ -11,8 +11,10 @@ pipeline {
     stages {
         stage ('BUILD') {
            steps{
-                echo "SKIP_TEST: ${params.SKIP_TEST}"
-                exit 1              
+                catchError(buildResult:'FAILURE', stageResult:'FAILURE'){
+                    echo "SKIP_TEST: ${params.SKIP_TEST}"
+                    exit 1              
+                }
             } 
         } 
         stage('TEST'){
