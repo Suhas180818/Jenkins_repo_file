@@ -1,5 +1,4 @@
 pipeline {
-    agent any 
     
     parameters{
         string(name:'NAME' , defaultValue:'' ,  description:'')
@@ -7,28 +6,20 @@ pipeline {
         choice(name:'BRANCH', choices:['main','feature','suhas'], description:'where the branch to deploy')
 
     }
-  
+
+    agent any 
+
+    
     stages {
         stage ('BUILD') {
            steps{
-                echo "SKIP_TEST: ${params.SKIP_TEST}"              
-            } 
-        } 
-        stage('TEST'){
-            parallel {
-                stage ('WINDOWS_TESTING'){
-                    steps {
-                        echo "Running in Windows Machine"                    
-                    }
-                }
-                stage('MACOS_TESTING'){
-                    steps{
-                        echo "Running test for MACOS MAchine"   
-                    }
-                }
-            }
+                echo "NAME: ${params.NAME}"
+                echo "SKIP_TEST: ${params.SKIP_TEST}"
+                echo "BRANCH: ${params.BRANCH}"
+                
+            }  
         }
-        stage ('FINAL') {  
+        stage ('TEST') {  
             steps {
                 sh '''
                     #!/bin/bash
