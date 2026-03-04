@@ -9,7 +9,7 @@ pipeline {
     }
   
     stages {
-        stage ('BUILD') {
+        stage ('BUILD_1a') {
            steps{
                 catchError(buildResult:'FAILURE', stageResult:'FAILURE'){
                     echo "SKIP_TEST: ${params.SKIP_TEST}"
@@ -17,6 +17,21 @@ pipeline {
                 }
             } 
         } 
+        stage ('BUILD_1b') {
+            steps{
+                script {
+                    try {
+                        sleep 5
+                        exit 1
+                    }
+                    catch (err){
+                        echo "Error catched : $(err)"
+                        currentStage.result = "SUCCESS"
+                    }
+
+                }
+            }
+        }
         stage('TEST'){
             parallel {
                 stage ('WINDOWS_TESTING'){
