@@ -1,35 +1,37 @@
 pipeline {
     agent any 
     
-    // parameters{
-    //     string(name:'NAME' , defaultValue:'' ,  description:'')
-    //     booleanParam(name:'SKIP_TEST', defaultValue:'false', description:'Checking to skip the test')
-    //     choice(name:'BRANCH', choices:['main','feature','suhas'], description:'where the branch to deploy')
+    parameters{
+        string(name:'NAME' , defaultValue:'' ,  description:'')
+        booleanParam(name:'SKIP_TEST', defaultValue:'false', description:'Checking to skip the test')
+        choice(name:'BRANCH', choices:['main','feature','suhas'], description:'where the branch to deploy')
 
-    // }
+    }
   
     stages {
-    //     stage ('BUILD_1a') {
-    //        steps{
-    //             catchError (buildResult:'FAILURE', stageResult:'FAILURE') {
-    //                 echo "SKIP_TEST: ${params.SKIP_TEST}"
-    //                 exit 1              
-    //             }
-    //         } 
-    //     } 
+        stage ('BUILD_1a') {
+           steps{
+                catchError (buildResult:'FAILURE', stageResult:'FAILURE') {
+                    echo "SKIP_TEST: ${params.SKIP_TEST}"
+                    exit 1              
+                }
+            } 
+        } 
         stage ('BUILD_1b') {
             steps{
                 script {
                     try {
-                        sleep 5
-                        exit 1
-                    }
-                    catch (err) {
-                        echo "Error catched : ${err}"
-                        currentStage.result = "SUCCESS"
-                        currentBuild.result = "SUCCESS"
+                        sh '''
+                            sleep 5
+                            exit 1
+                        '''
                     }
 
+                    catch (err) {
+                        echo "Error catched : ${err}"
+                        currentBuild.result = "SUCCESS"
+                        currentStage.result = "SUCCESS"                    
+                    }
                 }
             }
         }
