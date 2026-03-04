@@ -6,10 +6,23 @@ pipeline {
         booleanParam(name:'SKIP_TEST', defaultValue:'false', description:'Checking to skip the test')
         choice(name:'BRANCH', choices:['main','feature','suhas'], description:'where the branch to deploy')
 
-    }
+    }  
   
     stages {
-        stage ('BUILD_1a') {
+
+        stage ('CHECKOUT') {
+            checkout ([ $class : 'GitSCM'
+                        branches: [[name: '*/suhas']], 
+                        extensions: [], 
+                        userRemoteConfigs: [[
+                            credentialsId: 'Git_repo_acess', 
+                            url: 'https://github.com/Suhas180818/Jenkins_repo_file.git'
+                        ]]
+                    ])    
+
+        }
+        
+        stage ('TRY_CATCH') {
            steps{
                 catchError (buildResult:'FAILURE', stageResult:'FAILURE') {
                     echo "SKIP_TEST: ${params.SKIP_TEST}"
@@ -17,7 +30,8 @@ pipeline {
                 }
             } 
         } 
-        stage ('BUILD_1b') {
+        
+        stage ('TRY_CATCH2') {
             steps{
                 script {
                     try {
@@ -34,7 +48,11 @@ pipeline {
                 }
             }
         }
-        stage('TEST'){
+        
+        stage('TEST') {
+            when {
+                branch 'main' 
+            }
             parallel {
                 stage ('WINDOWS_TESTING'){
                     steps {
@@ -48,6 +66,7 @@ pipeline {
                 }
             }
         }
+        
         stage ('FINAL') {  
             steps {
                 sh '''
