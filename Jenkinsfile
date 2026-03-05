@@ -16,8 +16,8 @@ pipeline {
             agent {label 'slave1'}
             steps {
                 echo "This is the stage running in Test"
-                echo "DOCKER_USER : $(env.DOCKER_USER)"
-                echo "AWS_CREDENTIALS : $(env.AWS_CREDENTIALS)"
+                echo "DOCKER_USER : ${env.DOCKER_USER}"
+                echo "AWS_CREDENTIALS : ${env.AWS_CREDENTIALS}"
             }
         }
         stage ('Build') {
@@ -38,7 +38,7 @@ pipeline {
         stage ('DEPLOY') {
             steps {
                 echo "The stage is Deloying"
-                echo "DEVELOPER : $(params.DEVELOPER)"
+                echo "DEVELOPER : ${params.DEVELOPER}"
                 sleep 5
             }
 
