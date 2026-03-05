@@ -1,56 +1,55 @@
 pipeline {
     agent any 
 
-    
-    parameters{
-        string(name:'NAME' , defaultValue:'suhas' ,  description:'')
-        booleanParam(name:'SKIP_TEST', defaultValue:'false', description:'Checking to skip the test')
-        choice(name:'BRANCH', choices:['main','feature','suhas'], description:'where the branch to deploy')
-
-    }  
-  
-    stages {         
-        stage ('CHECK_OUT') {
-            steps {                
-                catchError(buildResult:'SUCCESS',stageResult:'SUCCESS')
-               
-                sh '''
-                    ls -lrt 
-                    exit 1               
-                '''         
-            }
-        }
-        
-        stage('TEST') {
-            parallel {
-                stage ('WINDOWS_TESTING'){
-                    steps {
-                        echo "Running in Windows Machine"                    
-                    }
-                }
-                stage('MACOS_TESTING'){
-                    steps{
-                        echo "Running test for MACOS MAchine"   
-                    }
-                }
-            }
-        }
-        
-        stage ('FINAL') {
-            steps {
-                sh '''
-                    #!/bin/bash
-                    ls -lrt
-                    echo "Shell Command Executing in Stage2"
-                    sleep 10 
-                ''' 
-            }
-
-        }
-
+    parameters {
+        string(name:'DEVELOPER',defaultValue:'',description:'Enter your name')
+        booleanParam(name:'SKIP_TEST',defaultValue:'fasle',description:'')
+        choice(name:'BRANCH',defaultValue:'['main','feature','suhas']',description:'Select your branch to run tests')
     }
+
+    environment {
+        DOCKER_USER = 'suhas'
+        AWS_CREDENTIALS = '123456789'
+    } 
+
+    stages {
+        stage ('TEST') {
+            agent {label 'slave1'}
+            steps {
+                echo "This is the stage running in Test"
+                echo "DOCKER_USER : $(env.DOCKER_USER)"
+                echo "AWS_CREDENTIALS : $(env.AWS_CREDENTIALS)"
+            }
+        }
+        stage ('Build') {
+            parallel{
+                stage ('WINDOWS_TESTING') {
+                    steps {
+                       echo "Building the project in WINDOWS OS"     
+                    }
+                }
+                stage ('MACOS_TESTING') {
+                    steps {
+                       echo "Building the project in MAC OS"     
+                    }
+                }
+
+            }
+        }
+        stage ('DEPLOY') {
+            steps {
+                echo "The stage is Deloying"
+                echo "BRANCH : $(params.BRANCH)"
+                echo "DEVELOPER : $(params.DEVELOPER)"
+                sleep 5
+            }
+
+        }
     
+    } 
 }
+    
+
 
 
 
