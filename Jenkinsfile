@@ -4,7 +4,7 @@ pipeline {
     parameters {
         string(name:'DEVELOPER',defaultValue:'',description:'Enter your name')
         booleanParam(name:'SKIP_TEST',defaultValue:'fasle',description:'')
-        choice(name:'BRANCH',defaultValue:'['main','feature','suhas']',description:'Select your branch to run tests')
+        choice(name:'BRANCH', choices:'['suhas','feature']',description:'Select your branch to run tests')
     }
 
     environment {
