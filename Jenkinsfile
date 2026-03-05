@@ -10,20 +10,10 @@ pipeline {
     }  
   
     stages {         
-        stage ('CHECK_OUT') {      
+        stage ('CHECK_OUT') {
             steps {                
                 catchError(buildResult:'SUCCESS',stageResult:'SUCCESS')
-                
-                // checkout ([
-                //     $class : 'GitSCM'
-                //     branches: [[name: '*/main']],
-                //     extensions: [],
-                //     userRemoteConfigs: [[
-                //         credentialsId:'Git_repo_acess'
-                //         url: 'https://github.com/Suhas180818/Jenkins_repo_file.git'
-                //     ]]    
-                // ])
-
+               
                 sh '''
                     ls -lrt 
                     exit 1               
@@ -46,7 +36,7 @@ pipeline {
             }
         }
         
-        stage ('FINAL') {  
+        stage ('FINAL') {
             steps {
                 sh '''
                     #!/bin/bash
@@ -64,3 +54,13 @@ pipeline {
 
 
 
+ 
+                // checkout ([
+                //     $class : 'GitSCM'
+                //     branches: [[name: '*/main']],
+                //     extensions: [],
+                //     userRemoteConfigs: [[
+                //         credentialsId:'Git_repo_acess'
+                //         url: 'https://github.com/Suhas180818/Jenkins_repo_file.git'
+                //     ]]    
+                // ])
