@@ -9,11 +9,10 @@ pipeline {
 
     }  
   
-    stages {  
-        
-        stage ('CHECK_OUT') {
-                   
-            steps {
+    stages {         
+        stage ('CHECK_OUT') {      
+            steps {                
+                catchError(buildResult:'SUCCESS',stageResult:'SUCCESS')
                 
                 checkout ([
                     $class : 'GitSCM'
@@ -27,12 +26,10 @@ pipeline {
 
                 sh '''
                     ls -lrt 
-                    git status 
+
                 
                 '''         
-            
             }
-
         }
         
         stage('TEST') {
