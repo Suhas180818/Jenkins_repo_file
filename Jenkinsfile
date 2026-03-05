@@ -4,7 +4,6 @@ pipeline {
     parameters {
         string(name:'DEVELOPER',defaultValue:'',description:'Enter your name')
         booleanParam(name:'SKIP_TEST',defaultValue:'fasle',description:'')
-        choice(name:'BRANCH', choices:'['suhas','feature']',description:'Select your branch to run tests')
     }
 
     environment {
@@ -39,7 +38,6 @@ pipeline {
         stage ('DEPLOY') {
             steps {
                 echo "The stage is Deloying"
-                echo "BRANCH : $(params.BRANCH)"
                 echo "DEVELOPER : $(params.DEVELOPER)"
                 sleep 5
             }
