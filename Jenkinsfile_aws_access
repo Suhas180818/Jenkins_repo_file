@@ -7,9 +7,12 @@ pipeline{
                 sh'''
                     aws --version
                     aws sts get-caller-identity
-                    
+                    username=$(aws sts get-caller-identity --query Arn --output text | cut -d'/' -f2)
+                    echo "AWS Username: $username"
                 '''
             }
         }
     }
 }
+
+
