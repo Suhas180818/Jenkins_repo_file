@@ -1,57 +1,16 @@
-pipeline {
+pipeline{
     agent any 
 
-    environment{
-        AWS_DEFAULT_REGION = 'ap-south-1'
-    }
-
     stages{
-        stage (AWS_INSTANCE) {
-            steps{
-                scripts {
-                    def instanceId = sh(script: "curl -s http://43.205.232.184", returnStdout: true).trim()
-                    echo "Running on instance: ${instanceId}"
+        stage('awsAccess'){
+            steps {
+                sh'''
+                    credentials=$(aws sts get-caller-identity)
 
-                    def userName = sh(script: "whoami", returnStdout: true).trim()
-                    echo "Jenkins is running as user: ${userName}"                
-                }
+                    echo "$credentials"
+                
+                '''
             }
         }
     }
-
-
-
 }
-
-
-// pipeline {
-//     agent any
-
-//     environment {
-//         AWS_DEFAULT_REGION = "us-east-1"
-//     }
-
-//     stages {
-//         stage('Get Instance Metadata') {
-//             steps {
-//                 script {
-//                     // Example: Get instance ID from metadata
-//                     def instanceId = sh(
-//                         script: "curl -s http://169.254.169.254/latest/meta-data/instance-id",
-//                         returnStdout: true
-//                     ).trim()
-
-//                     echo "Instance ID: ${instanceId}"
-
-//                     // Use AWS CLI to get instance details
-//                     def instanceDetails = sh(
-//                         script: "aws ec2 describe-instances --instance-ids ${instanceId} --query 'Reservations[0].Instances[0].{ID:InstanceId,Name:Tags[?Key==`Name`].Value|[0],User:KeyName}' --output json",
-//                         returnStdout: true
-//                     ).trim()
-
-//                     echo "Instance Details: ${instanceDetails}"
-//                 }
-//             }
-//         }
-//     }
-// }
