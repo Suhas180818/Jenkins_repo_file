@@ -5,8 +5,7 @@ pipeline{
         stage('awsAccess'){
             steps {
                 sh'''
-                    credentials=$(/usr/local/bin/aws sts get-caller-identity)
-                    echo "$credentials"
+                    aws --version
                 '''
             }
         }
