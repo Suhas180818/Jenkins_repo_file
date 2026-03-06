@@ -1,26 +1,21 @@
 pipeline {
-    agent any 
+    agent any
 
-    environment{
-        AWS_DEFAULT_REGION = 'ap-south-1'
+    environment {
+        AWS_DEFAULT_REGION = "ap-south-1"
     }
 
-    stages{
-        stage (AWS_INSTANCE) {
-            steps{
-                scripts {
-                    instanceId = sh(script: "curl -s http://43.205.232.184", returnStdout: true).trim()
-                    echo "Running on instance: ${instanceId}"
+    stages {
+        stage('Get Instance Metadata') {
+            steps {
+                sh'''
+                    aws sts get-caller-identity
 
-                    userName = sh(script: "whoami", returnStdout: true).trim()
-                    echo "Jenkins is running as user: ${userName}"                
-                }
+                    USERNAME=$(aws sts get-caller-identity --query Arn --output text | awk -F/ '{print $NF}')
+
+                    echo "AWS User: $USERNAME"
+                '''
             }
         }
     }
-
-
-
 }
-
-
