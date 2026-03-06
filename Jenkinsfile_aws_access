@@ -9,10 +9,10 @@ pipeline {
         stage (AWS_INSTANCE) {
             steps{
                 scripts {
-                    def instanceId = sh(script: "curl -s http://43.205.232.184", returnStdout: true).trim()
+                    instanceId = sh(script: "curl -s http://43.205.232.184", returnStdout: true).trim()
                     echo "Running on instance: ${instanceId}"
 
-                    def userName = sh(script: "whoami", returnStdout: true).trim()
+                    userName = sh(script: "whoami", returnStdout: true).trim()
                     echo "Jenkins is running as user: ${userName}"                
                 }
             }
