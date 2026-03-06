@@ -5,10 +5,8 @@ pipeline{
         stage('awsAccess'){
             steps {
                 sh'''
-                    credentials=$(aws sts get-caller-identity)
-
+                    credentials=$(/usr/local/bin/aws sts get-caller-identity)
                     echo "$credentials"
-                
                 '''
             }
         }
