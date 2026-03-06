@@ -6,8 +6,8 @@ pipeline{
             steps {
                 sh'''
                     aws --version
-                    credentials=$(aws sts get-caller-identity)
-                    echo "$credentials"
+                    aws sts get-caller-identity
+                    
                 '''
             }
         }
