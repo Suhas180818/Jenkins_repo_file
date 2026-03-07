@@ -2,9 +2,8 @@ pipeline {
     agent any 
 
     trigger {
-        upstream (
-            upstreamProjects: 'AWS access' , threshold: hudson.model.Result.SUCCESS
-        )
+    
+        upstream threshold: 'FAILURE', upstreamProjects: 'AWS access,'
 
     }
 
