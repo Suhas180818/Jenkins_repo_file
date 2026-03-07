@@ -3,8 +3,10 @@ pipeline {
 
     triggers {
     
-        upstream threshold: 'FAILURE', upstreamProjects: 'AWS access,'
-
+        upstream (
+            upstreamProjects: 'AWS access',
+            threshold: 'hudson.model.Result.SUCCESS', 
+        )
     }
 
 
