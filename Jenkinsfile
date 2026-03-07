@@ -1,31 +1,46 @@
 pipeline {
-    
-    agent {label 'ubuntulinux01' && 'ubuntulinux02'}
-    
+    agent any 
+
+  
     stages {
         stage ('TEST') {
-           steps{
-                echo "This is the bulid"
-                sh '''
-                    echo "This the shell executed Command in Stage 1"              
+            
+            steps { 
+                sh'''
+                    echo "This is build stage"
+                    sleep 5
                 '''
-           }  
+            }
         }
-        stage ('TEST') {
+        stage ('Build') {
+            parallel{
+                stage ('WINDOWS_TESTING') {
+                    steps {
+                       echo "Building the project in WINDOWS OS"     
+                    }
+                }
+                stage ('MACOS_TESTING') {
+                    steps {
+                       echo "Building the project in MAC OS"     
+                    }
+                }
+
+            }
+        }
+        stage ('DEPLOY') {
             steps {
-                sh '''
-                    #!/bin/bash
-                    ls -lrt
-                    echo "Shell Command Executing in Stage2"
-                    sleep 10 
-                ''' 
+                echo "The stage is Deloying"
+                echo "DEVELOPER : ${params.DEVELOPER}"
+                sleep 5
             }
 
         }
-
-    }
-
+    
+    } 
 }
+    
 
 
 
+
+ 

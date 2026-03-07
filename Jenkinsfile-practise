@@ -1,0 +1,76 @@
+pipeline {
+    agent any 
+
+    parameters{
+        booleanParam(name:'SKIP_TEST',defaultValue:'false',description:'If the test block to skip')
+        string(name:'DEVELOPER',defaultValue:'SUHAS',description:'The developer running the job')
+        choice(name:'BRANCH',choices:'['Prod','Test','Build']',description:'Environment to run test')
+        text(name:'SUHAS',defaultValue:'one\ntwo\nthree\n',description:'')
+        password(name:'PASSWORD',defaultValue:'',description:'')
+    } 
+
+    environment{
+        BRANCH = 'prod'
+
+    }
+
+    stages {
+        stage ('TESTING'){
+            // agent (label 'slave1')
+            environment {
+                DOCKER_USER = 'suhas_180818'
+                BRANCH = "Prod"
+            }
+            steps {
+                sleep 5 
+                echo "This is testing stage"            
+            }
+        }    
+        stage ('Parallel build testing'){
+            parallel{
+                stage ('para_1A') {
+                    steps {
+                        echo "This is parallel staged running 1A"                        
+                    }
+                }
+                stage ('Para_2A'){
+                    steps{
+                        echo "This is the paralle staged running 2B"
+                    }
+                }                
+
+
+            }                  
+        }
+        stage('Try catch error'){
+            parallel{
+                stage('Descriptive_try') {
+                    steps{
+                        catchError (bulidResult:'SUCCESS',stageResult:'FAILURE') {
+                            sh'''
+                                echo "I am trying to catch the error"
+                                exit 1
+                            '''
+                        }
+                    }
+                }
+                stage('SCripted_Try_catch') {
+                    steps{
+                        script{
+                            try {
+                                sh'''
+                                    echo "I am trying to catch the error"
+                                    exit 1
+                                '''
+                            }
+                            catch(err){
+                                echo "error caught : $(err)"
+                                currentBuild.result = "SUCCESS"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }  
+}
