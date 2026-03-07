@@ -1,7 +1,7 @@
 pipeline {
     agent any 
 
-    trigger {
+    triggers {
     
         upstream threshold: 'FAILURE', upstreamProjects: 'AWS access,'
 
