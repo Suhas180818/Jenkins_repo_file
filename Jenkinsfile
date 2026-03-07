@@ -1,7 +1,15 @@
 pipeline {
     agent any 
 
-  
+    triggers {
+    
+        upstream (
+            upstreamProjects: 'AWS access',
+            threshold: hudson.model.Result.SUCCESS, 
+        )
+    }
+
+
     stages {
         stage ('TEST') {
             
