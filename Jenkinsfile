@@ -5,7 +5,7 @@ pipeline {
     
         upstream (
             upstreamProjects: 'AWS access',
-            threshold: 'hudson.model.Result.SUCCESS', 
+            threshold: hudson.model.Result.SUCCESS, 
         )
     }
 
