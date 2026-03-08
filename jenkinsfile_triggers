@@ -1,9 +1,12 @@
 pipeline {
     agent any 
 
-    options {
+    triggers {
     
-         buildDiscarder(logRotator(numToKeepStr: '2')) 
+        upstream (
+            upstreamProjects: 'AWS access',
+            threshold: hudson.model.Result.SUCCESS, 
+        )
     }
 
 
