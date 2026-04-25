@@ -1,13 +1,13 @@
 pipeline {
     agent any 
 
-    triggers {
+    // triggers {
     
-        upstream (
-            upstreamProjects: 'AWS access',
-            threshold: hudson.model.Result.SUCCESS, 
-        )
-    }
+    //     upstream (
+    //         upstreamProjects: 'AWS access',
+    //         threshold: hudson.model.Result.SUCCESS, 
+    //     )
+    // }
 
 
     stages {
