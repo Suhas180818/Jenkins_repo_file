@@ -1,6 +1,6 @@
 pipeline {
  agent {
-    docker { image 'node:16-alpine' }
+    docker { image 'alpine:3.22.4' }
   }    
 
     // triggers {
